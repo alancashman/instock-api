@@ -8,9 +8,17 @@ const CORS_ORIGIN = process.env.CORS_ORIGIN;
 
 const app = express();
 
+const warehouseRoutes = require("./routes/warehouse");
+
+const inventoryRoutes = require("./routes/inventory");
+
 app.use(express.json());
 app.use(express.static("public"));
 app.use(cors({ origin: CORS_ORIGIN }));
+
+app.use("/warehouses", warehouseRoutes);
+
+app.use("/inventories", inventoryRoutes);
 
 ////////
 // WAREHOUSES ENDPOINTS
