@@ -4,6 +4,9 @@ const warehouseController = require("../controllers/warehouseController");
 
 router.route("/").get(warehouseController.index); // get all warehouses
 
-router.route("/:id").get(warehouseController.singleWarehouse);
+router
+  .route("/:id")
+  .get(warehouseController.singleWarehouse)
+  .delete(warehouseController.deleteWarehouse);
 
 module.exports = router;
