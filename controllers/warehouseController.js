@@ -1,5 +1,6 @@
 const knex = require("knex")(require("../knexfile"));
 
+// GET all warehouses
 exports.index = (_req, res) => {
   knex("warehouses")
     .then((data) => {
@@ -10,6 +11,7 @@ exports.index = (_req, res) => {
     );
 };
 
+// GET single warehouse details
 exports.singleWarehouse = (req, res) => {
   knex("warehouses")
     .where({ id: req.params.id })
@@ -27,6 +29,7 @@ exports.singleWarehouse = (req, res) => {
     );
 };
 
+// DELETE warehouse
 exports.deleteWarehouse = (req, res) => {
   knex("warehouses")
     .where({ id: req.params.id })
