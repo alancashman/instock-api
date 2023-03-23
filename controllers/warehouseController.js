@@ -9,3 +9,39 @@ exports.index = (_req, res) => {
       res.status(400).send(`Error retrieving Warehouses: ${err}`)
     );
 };
+
+exports.singleWarehouse = (req, res) => {
+  knex("warehouses")
+    .where({ id: req.params.id })
+    .then((data) => {
+      if (!data.length) {
+        return res
+          .status(404)
+          .send(`Record with id: ${req.params.id} is not found`);
+      }
+
+      res.status(200).json(data[0]);
+    })
+    .catch((err) =>
+      res.status(400).send(`Error retrieving warehouse ${req.params.id} ${err}`)
+    );
+};
+
+exports.singleItem = (req, res) => {
+  knex("inventories")
+    .join("warehouses", "inventories.warehouse_id", "=", "warehouses.id")
+    .select("inventories.*", "warehouses.warehouse_name")
+    .where("inventories.id", req.params.id)
+    .then((data) => {
+      if (!data.length) {
+        return res
+          .status(404)
+          .send(`Item with id: ${req.params.id} cannot be found`);
+      }
+
+      res.status(200).json(data[0]);
+    })
+    .catch((err) => {
+      res.status(400).send(`Error retrieving item ${req.params.id} ${err}`);
+    });
+};
