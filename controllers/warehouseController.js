@@ -5,6 +5,7 @@ const { v4: uuidv4 } = require("uuid");
 exports.index = (_req, res) => {
   knex("warehouses")
     .then((data) => {
+      console.log(data)
       res.status(200).json(data);
     })
     .catch((err) =>
@@ -111,7 +112,7 @@ exports.warehouseInventories = (req, res) => {
     .where({ warehouse_id: req.params.id })
     .then((data) => {
       res.status(200).json(data);
-      console.log(data);
+      // console.log("inventories, ", data);
     })
     .catch((err) => {
       res
