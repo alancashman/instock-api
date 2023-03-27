@@ -111,7 +111,7 @@ exports.warehouseInventories = (req, res) => {
     .where({ warehouse_id: req.params.id })
     .then((data) => {
       res.status(200).json(data);
-      console.log(data);
+      // console.log("inventories, ", data);
     })
     .catch((err) => {
       res

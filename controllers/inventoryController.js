@@ -51,6 +51,21 @@ exports.deleteItem = (req, res) => {
     });
 };
 
+// PUT/UPDATE existing warehouse
+exports.updateInventory = (req, res) => {
+  knex("inventories")
+    .update(req.body)
+    .where({ id: req.params.id })
+    .then(() => {
+      res
+        .status(200)
+        .send(`Inventory with id: ${req.params.id} has been updated`);
+    })
+    .catch((err) =>
+      res.status(400).send(`Error updating Inventory ${req.params.id} ${err}`)
+    );
+};
+
 //POST single inventory item
 exports.addItem = (req, res) => {
   console.log("addItem", req.body);
