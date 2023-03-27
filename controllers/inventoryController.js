@@ -105,15 +105,12 @@ exports.addItem = (req, res) => {
       // Insert new inventory item into the database
       knex("inventories")
         .insert(newItem)
-        // .returning("*")
         .then((data) => {
-          console.log("data: ", data);
           // For POST requests we need to respond with 201 and the newly created record
           const newItemUrl = `/inventories/${data[0]}`;
           res.status(201).json(newItemUrl);
         })
         .catch((err) => {
-          console.log("err: ", err);
           res.status(400).send(`Error creating inventory item: ${err}`);
         });
     });

@@ -96,3 +96,21 @@ exports.deleteWarehouse = (req, res) => {
             res.status(404).send(`Warehouse with id: ${req.params.id} ${err}`)
         );
 };
+
+//GET inventories for a given warehouse
+
+exports.warehouseInventories = (req, res) => {
+  knex("inventories")
+    .where({ warehouse_id: req.params.id })
+    .then((data) => {
+      res.status(200).json(data);
+      console.log(data);
+    })
+    .catch((err) => {
+      res
+        .status(400)
+        .send(
+          `Error retrieving inventories for warehouse ${req.params.id} ${err}`
+        );
+    });
+};
