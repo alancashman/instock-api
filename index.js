@@ -24,7 +24,23 @@ app.use("/inventories", inventoryRoutes);
 // WAREHOUSES ENDPOINTS
 
 // GET list of all warehouses
-app.get("/api/warehouses", (req, res) => { });
+app.get("/api/warehouses", (req, res) => {
+    const { sort_by, order_by } = req.query;
+    let query = knex("warehouses");
+
+    if (sort_by) {
+        const direction = order_by === "desc" ? "desc" : "asc";
+        query = query.orderBy(sort_by, direction);
+    }
+
+    query
+        .then((rows) => {
+            res.json(rows);
+        })
+        .catch((error) => {
+            res.status(500).json({ message: error.message });
+        })
+});
 
 // GET single warehouse
 app.get("/api/warehouses/:id", (req, res) => { });
