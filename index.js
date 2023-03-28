@@ -24,42 +24,58 @@ app.use("/inventories", inventoryRoutes);
 // WAREHOUSES ENDPOINTS
 
 // GET list of all warehouses
-app.get("/api/warehouses", (req, res) => {});
+app.get("/api/warehouses", (req, res) => { });
 
 // GET single warehouse
-app.get("/api/warehouses/:id", (req, res) => {});
+app.get("/api/warehouses/:id", (req, res) => { });
 
 // POST to create new warehouse
-app.post("/api/warehouses", (req, res) => {});
+app.post("/api/warehouses", (req, res) => { });
 
 // PUT to edit single warehouse
-app.put("/api/warehouses/:id", (req, res) => {});
+app.put("/api/warehouses/:id", (req, res) => { });
 
 // DELETE a single warehouse
-app.delete("/api/warehouses/:id", (req, res) => {});
+app.delete("/api/warehouses/:id", (req, res) => { });
 
 ////////
 // INVENTORY ENDPOINTS
 
 // GET all inventory items
-app.get("/api/inventories", (req, res) => {});
+app.get("/api/inventories", (req, res) => {
+    const { sort_by, order_by } = req.query;
+    let query = knex("inventory");
+
+    if (sort_by) {
+        const direction = order_by === "desc" ? "desc" : "asc";
+        query = query.orderBy(sort_by, direction);
+    }
+
+    query
+        .then((rows) => {
+            res.json(rows);
+        })
+        .catch((error) => {
+            res.status(500).json({ message: error.message });
+        })
+});
 
 // GET single inventory item
-app.get("/api/inventories/:id", (req, res) => {});
+app.get("/api/inventories/:id", (req, res) => { });
 
 // GET inventory for specific warehouse
-app.get("/api/warehouses/:id/inventories", (req, res) => {});
+app.get("/api/warehouses/:id/inventories", (req, res) => { });
 
 // POST to create new inventory item
-app.post("/api/inventories", (req, res) => {});
+app.post("/api/inventories", (req, res) => { });
 
 // PUT to edit inventory item
-app.put("/api/inventories/:id", (req, res) => {});
+app.put("/api/inventories/:id", (req, res) => { });
 
 // DELETE single inventory item
-app.delete("/api/inventories/:id", (req, res) => {});
+app.delete("/api/inventories/:id", (req, res) => { });
 
 // Start server
 app.listen(PORT, (req, res) => {
-  console.log(`Listening on port ${PORT}...`);
+    console.log(`Listening on port ${PORT}...`);
 });
