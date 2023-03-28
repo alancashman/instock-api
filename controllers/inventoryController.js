@@ -51,7 +51,7 @@ exports.deleteItem = (req, res) => {
     });
 };
 
-// PUT/UPDATE existing warehouse
+// PUT/UPDATE existing inventory
 exports.updateInventory = (req, res) => {
   knex("inventories")
     .update(req.body)
